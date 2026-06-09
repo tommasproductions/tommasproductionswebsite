@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-const links = ["Services", "Values", "Contact"];
+const links = [
+  { label: "Work",     id: "featured-work" },
+  { label: "Services", id: "services"      },
+  { label: "Contact",  id: "contact"       },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -18,7 +22,7 @@ export default function Navbar() {
 
   const scrollTo = (id: string) => {
     setMenuOpen(false);
-    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -28,7 +32,6 @@ export default function Navbar() {
           scrolled ? "bg-black border-b border-white/10" : "bg-transparent"
         }`}
       >
-        {/* Logo */}
         <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Home">
           <Image
             src="/tp-logo.svg"
@@ -40,45 +43,30 @@ export default function Navbar() {
           />
         </button>
 
-        {/* Desktop links */}
         <ul className="hidden md:flex items-center gap-10">
-          {links.map((link) => (
-            <li key={link}>
+          {links.map(({ label, id }) => (
+            <li key={id}>
               <button
-                onClick={() => scrollTo(link)}
+                onClick={() => scrollTo(id)}
                 className="font-poppins text-sm tracking-widest uppercase text-white/70 hover:text-white transition-colors duration-200"
               >
-                {link}
+                {label}
               </button>
             </li>
           ))}
         </ul>
 
-        {/* Hamburger */}
         <button
           className="md:hidden flex flex-col justify-center items-end gap-[6px] w-8 h-8"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
         >
-          <span
-            className={`block h-px bg-white transition-all duration-300 origin-right ${
-              menuOpen ? "w-6 rotate-[-45deg] translate-y-[7px]" : "w-6"
-            }`}
-          />
-          <span
-            className={`block h-px bg-white transition-all duration-300 ${
-              menuOpen ? "opacity-0 w-4" : "w-4"
-            }`}
-          />
-          <span
-            className={`block h-px bg-white transition-all duration-300 origin-right ${
-              menuOpen ? "w-6 rotate-[45deg] -translate-y-[7px]" : "w-6"
-            }`}
-          />
+          <span className={`block h-px bg-white transition-all duration-300 origin-right ${menuOpen ? "w-6 rotate-[-45deg] translate-y-[7px]" : "w-6"}`} />
+          <span className={`block h-px bg-white transition-all duration-300 ${menuOpen ? "opacity-0 w-4" : "w-4"}`} />
+          <span className={`block h-px bg-white transition-all duration-300 origin-right ${menuOpen ? "w-6 rotate-[45deg] -translate-y-[7px]" : "w-6"}`} />
         </button>
       </nav>
 
-      {/* Mobile fullscreen overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -88,17 +76,17 @@ export default function Navbar() {
             transition={{ duration: 0.35 }}
             className="fixed inset-0 z-40 bg-black flex flex-col items-center justify-center gap-12"
           >
-            {links.map((link, i) => (
+            {links.map(({ label, id }, i) => (
               <motion.button
-                key={link}
+                key={id}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 12 }}
                 transition={{ delay: i * 0.08, duration: 0.35 }}
-                onClick={() => scrollTo(link)}
+                onClick={() => scrollTo(id)}
                 className="font-montserrat text-5xl font-bold text-white tracking-tight"
               >
-                {link}
+                {label}
               </motion.button>
             ))}
           </motion.div>

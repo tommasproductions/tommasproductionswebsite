@@ -11,7 +11,6 @@ export default function Hero() {
       id="hero"
       className="grain-overlay relative min-h-screen bg-black flex flex-col items-center justify-center text-center px-6 overflow-hidden"
     >
-      {/* Content sits above grain overlay */}
       <div className="relative z-10 max-w-5xl mx-auto">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
@@ -27,10 +26,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35 }}
           className="font-montserrat font-bold text-white leading-[1.05] mb-8"
-          style={{
-            fontSize: "clamp(2.8rem, 7vw, 6rem)",
-            letterSpacing: "-0.02em",
-          }}
+          style={{ fontSize: "clamp(2.8rem, 7vw, 6rem)", letterSpacing: "-0.02em" }}
         >
           Transforming ideas into
           <br />
@@ -61,14 +57,13 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — line only, no text */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.8 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center z-10"
       >
-        <span className="font-poppins text-white/25 text-[10px] tracking-[0.3em] uppercase">Scroll</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
